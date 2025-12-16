@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>WHITESHADOW-MD Main Bot</title>
+<link rel="icon" href="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+  /* Base Styles */
+  body { font-family: 'Inter', sans-serif; background: linear-gradient(180deg,#020202,#07101a); color: #fff; overflow-x:hidden; min-height:100vh; padding-bottom:220px; }
+  a { text-decoration:none; }
+  
+  /* Animated Background */
+  body::before {
+    content: "";
+    position: fixed;
+    inset:0;
+    background: linear-gradient(45deg,#0af,#4fc3ff,#0ff,#4fc3ff);
+    background-size:400% 400%;
+    animation:bgmove 25s linear infinite;
+    z-index:-1;
+    opacity:0.08;
+  }
+  @keyframes bgmove { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
+
+  /* Logo Animation */
+  .logo-anim { width:120px;height:120px;border-radius:50%;overflow:hidden; animation: float 3s ease-in-out infinite; margin:auto; display:block; border:3px solid #0af; }
+  @keyframes float { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-15px)} }
+
+  /* Sections */
+  .section-title { font-size:1.8rem;font-weight:700;margin-bottom:16px;text-transform:uppercase; letter-spacing:1px; text-align:center; }
+  .grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px; }
+  .card { background: rgba(255,255,255,0.02); border-radius:12px; padding:20px; border:1px solid rgba(10,170,255,0.06); transition:0.3s; text-align:center; cursor:pointer; color:#fff; position:relative; overflow:hidden; }
+  .card::after{ content:""; position:absolute; inset:0; background:rgba(10,170,255,0.03); opacity:0; transition:0.3s; border-radius:12px; }
+  .card:hover { transform:scale(1.05); background: rgba(10,170,255,0.1); }
+  .card:hover::after{ opacity:1; }
+  .btn-primary { background: linear-gradient(90deg,#0af,#4fc3ff); padding:10px 14px; border-radius:12px; font-weight:600; color:#02121a; display:inline-block; transition:0.3s; cursor:pointer; position:relative; overflow:hidden; }
+  .btn-primary::after{ content:""; position:absolute; inset:0; background:rgba(255,255,255,0.1); opacity:0; border-radius:12px; transition:0.3s; }
+  .btn-primary:hover::after{ opacity:1; }
+  .mini-logo { width:80px;height:80px;border-radius:50%; transition:0.3s; }
+  .mini-logo:hover { transform:scale(1.2) rotate(10deg); }
+
+  .store-btn { display:block; margin:6px auto; width:200px; text-align:center; }
+
+  /* Music Player Footer */
+  .ws-player { position:fixed; left:12px; right:12px; bottom:12px; background:linear-gradient(90deg,rgba(10,170,255,0.07),rgba(10,170,255,0.02)); backdrop-filter:blur(8px); padding:12px; border-radius:14px; display:flex; align-items:center; gap:12px; z-index:999; box-shadow:0 0 20px rgba(10,170,255,0.3);}
+  .ws-player img { width:62px; height:62px; border-radius:10px; object-fit:cover; border:1px solid rgba(255,255,255,0.03); }
+  .ws-progress{ width:200px; height:6px; background:rgba(255,255,255,0.03); border-radius:8px; overflow:hidden; }
+  .ws-progress>div{height:100%; width:0; background:linear-gradient(90deg,#0af,#7be1ff);}
+  /* Glowing animation when playing */
+  .glow {
+    animation: glowAnim 1.5s infinite alternate;
+  }
+  @keyframes glowAnim {
+    0%{ box-shadow: 0 0 10px #0af; }
+    50%{ box-shadow: 0 0 25px #0ff; }
+    100%{ box-shadow: 0 0 15px #4fc3ff; }
+  }
+
+  /* Footer & Social Icons */
+  .powered { text-align:center; font-size:13px; color:#777; margin-top:10px; }
+  .footer-social { text-align:center; margin-top:6px; display:flex; justify-content:center; gap:14px; }
+  .footer-social a{ color:#0af; font-size:18px; transition:0.3s; }
+  .footer-social a:hover{ color:#0ff; transform:scale(1.2); }
+
+  /* Text colors */
+  .text-primary{ color:#0af; font-weight:600; text-decoration:none; }
+  .text-green{ color:#4fff4f; }
+  .text-pink{ color:#ff6fff; }
+  .text-yellow{ color:#ffff66; }
+  .text-blue{ color:#66ccff; }
+  .text-purple{ color:#cc99ff; }
+</style>
+</head>
+<body>
+
+<!-- Header / Logo -->
+<header class="text-center py-6">
+  <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg" alt="WhiteShadow MD" class="logo-anim mb-3">
+  <h1 class="text-4xl font-bold text-indigo-400">WHITESHADOW-MD Main Bot</h1>
+  <p class="text-gray-400 mt-2">Owner: Chamod Nimsara | Multidevice | Version: 4.0.0</p>
+</header>
+
+<!-- Special Features -->
+<section class="p-5">
+  <h2 class="section-title text-yellow">Smart Automation</h2>
+  <div class="grid-3">
+    <a href="https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="card btn-primary">Main Bot Repo</a>
+    <a href="https://heroku.com/deploy?template=https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="card btn-primary">Heroku Deploy Template</a>
+    <button class="card btn-primary" onclick="window.open('https://newpair-biyv.onrender.com','_blank')">Pair Site 1</button>
+    <button class="card btn-primary" onclick="window.open('https://paie-x8ed.onrender.com/pair','_blank')">Pair Site 2</button>
+    <button class="card btn-primary" onclick="window.open('https://whiteshadow-md-main.onrender.com','_blank')">Pair Site 3</button>
+  </div>
+</section>
+
+<!-- Mini Bot Servers -->
+<section class="p-5">
+  <h2 class="section-title text-green">Mini Bot Servers</h2>
+  <div class="grid-3">
+    <a href="https://newpair-biyv.onrender.com" target="_blank" class="card">
+      <img src="https://files.catbox.moe/fj19m9.jpg" class="mini-logo mb-2">
+      <h3 class="font-semibold text-lg">Mini Bot 1</h3>
+    </a>
+    <a href="https://paie-x8ed.onrender.com/pair" target="_blank" class="card">
+      <img src="https://files.catbox.moe/fj19m9.jpg" class="mini-logo mb-2">
+      <h3 class="font-semibold text-lg">Mini Bot 2</h3>
+    </a>
+    <a href="https://whiteshadow-md-main.onrender.com" target="_blank" class="card">
+      <img src="https://files.catbox.moe/fj19m9.jpg" class="mini-logo mb-2">
+      <h3 class="font-semibold text-lg">Mini Bot 3</h3>
+    </a>
+  </div>
+</section>
+
+<!-- Store Section -->
+<section class="p-5">
+  <h2 class="section-title text-orange-400">Store</h2>
+  <div class="grid-3 text-center">
+    <a href="https://wa.me/94704896880?text=Buy%20Render%20Free%20Plan" target="_blank" class="card btn-primary store-btn">Render Account - 200/=</a>
+    <a href="https://wa.me/94704896880?text=Buy%20Plugin" target="_blank" class="card btn-primary store-btn">Plugin - 60/=</a>
+    <a href="https://wa.me/94704896880?text=Buy%20MiniBot%20Base" target="_blank" class="card btn-primary store-btn">MiniBot Base - 250/=</a>
+    <a href="https://wa.me/94704896880?text=Buy%20Bot%20Deploy" target="_blank" class="card btn-primary store-btn">Bot Deploy (Heroku 1 month) - 200/=</a>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="p-5">
+  <h2 class="section-title text-purple">About WHITESHADOW-MD</h2>
+  <p>WHITESHADOW-MD is a modern, multi-functional WhatsApp bot with rich features like viewonce download, anti-delete, channel uploads, song download from TikTok/FB/IG/YT, Web2Zip, and many more.</p>
+  <p class="mt-2">Follow our TikTok: <a href="https://www.tiktok.com/@white.shadow468?_t=ZS-903M0JpWH3w&_r=1" class="text-pink underline">White.Shadow468</a></p>
+  <p class="mt-1">Official Channels:</p>
+  <ul class="list-disc list-inside">
+    <li><a href="https://whatsapp.com/channel/0029Vak4dFAHQbSBzyxlGG13" class="text-green underline" target="_blank">Channel 1</a></li>
+    <li><a href="https://whatsapp.com/channel/0029Vb4bj5zI7BeFm6aM8O1p" class="text-green underline" target="_blank">Channel 2</a></li>
+  </ul>
+</section>
+
+<!-- Footer Music Player -->
+<div class="ws-player" id="ws-player">
+  <img id="playerCover" src="https://files.catbox.moe/xta6u1.jpg" alt="cover">
+  <div class="info">
+    <h4 id="playerTitle">Nidahasi</h4>
+    <p id="playerArtist" class="text-sm">Smokio</p>
+    <div class="flex items-center gap-2 mt-1">
+      <div class="ws-progress"><div id="wsProgressBar"></div></div>
+      <div class="flex gap-2">
+        <button id="prevBtn"><i class="fa-solid fa-backward-step"></i></button>
+        <button id="playPauseBtn" style="transform:scale(1.2)"><i id="playIcon" class="fa-solid fa-play"></i></button>
+        <button id="nextBtn"><i class="fa-solid fa-forward-step"></i></button>
+      </div>
+    </div>
+  </div>
+  <a id="downloadLink" href="https://files.catbox.moe/sv4e8r.mp3" download class="text-primary">Download</a>
+</div>
+<audio id="audio" src="https://files.catbox.moe/sv4e8r.mp3" preload="metadata"></audio>
+
+<div class="powered">Powered by WHITESHADOW ©2026</div>
+<div class="footer-social">
+  <a href="https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank"><i class="fa-brands fa-github"></i></a>
+  <a href="https://whatsapp.com/channel/0029Vak4dFAHQbSBzyxlGG13" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+  <a href="https://www.tiktok.com/@white.shadow468?_t=ZS-903M0JpWH3w&_r=1" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+</div>
+
+<script>
+  const audio=document.getElementById('audio');
+  const playBtn=document.getElementById('playPauseBtn');
+  const playIcon=document.getElementById('playIcon');
+  const progressBar=document.getElementById('wsProgressBar');
+  const wsPlayer=document.getElementById('ws-player');
+
+  playBtn.addEventListener('click',()=>{
+    if(audio.paused){
+      audio.play();
+      wsPlayer.classList.add('glow');
+    }else{
+      audio.pause();
+      wsPlayer.classList.remove('glow');
+    }
+  });
+
+  audio.addEventListener('play',()=>{ playIcon.className='fa-solid fa-pause'; wsPlayer.classList.add('glow'); });
+  audio.addEventListener('pause',()=>{ playIcon.className='fa-solid fa-play'; wsPlayer.classList.remove('glow'); });
+  audio.addEventListener('timeupdate',()=>{ if(audio.duration){progressBar.style.width=(audio.currentTime/audio.duration*100)+'%'} });
+  document.getElementById('prevBtn').addEventListener('click',()=>audio.currentTime=0);
+  document.getElementById('nextBtn').addEventListener('click',()=>audio.currentTime=audio.duration||0);
+</script>
+
+</body>
+</html>
