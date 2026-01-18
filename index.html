@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,208 +7,395 @@
 <link rel="icon" href="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-  /* Base Styles */
-  body { font-family: 'Inter', sans-serif; background: linear-gradient(180deg,#020202,#07101a); color: #fff; overflow-x:hidden; min-height:100vh; padding-bottom:220px; }
-  a { text-decoration:none; }
-  
-  /* Animated Background */
+  /* --- Global Styles --- */
+  :root {
+    --primary-color: #00e5ff;
+    --secondary-color: #7b2cbf;
+    --bg-dark: #050505;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark);
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding-bottom: 180px;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(123, 44, 191, 0.15) 0%, transparent 40%);
+  }
+
+  /* Grid Background Effect */
   body::before {
     content: "";
     position: fixed;
-    inset:0;
-    background: linear-gradient(45deg,#0af,#4fc3ff,#0ff,#4fc3ff);
-    background-size:400% 400%;
-    animation:bgmove 25s linear infinite;
-    z-index:-1;
-    opacity:0.08;
-  }
-  @keyframes bgmove { 0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%} }
-
-  /* Logo Animation */
-  .logo-anim { width:120px;height:120px;border-radius:50%;overflow:hidden; animation: float 3s ease-in-out infinite; margin:auto; display:block; border:3px solid #0af; }
-  @keyframes float { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-15px)} }
-
-  /* Sections */
-  .section-title { font-size:1.8rem;font-weight:700;margin-bottom:16px;text-transform:uppercase; letter-spacing:1px; text-align:center; }
-  .grid-3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px; }
-  .card { background: rgba(255,255,255,0.02); border-radius:12px; padding:20px; border:1px solid rgba(10,170,255,0.06); transition:0.3s; text-align:center; cursor:pointer; color:#fff; position:relative; overflow:hidden; }
-  .card::after{ content:""; position:absolute; inset:0; background:rgba(10,170,255,0.03); opacity:0; transition:0.3s; border-radius:12px; }
-  .card:hover { transform:scale(1.05); background: rgba(10,170,255,0.1); }
-  .card:hover::after{ opacity:1; }
-  .btn-primary { background: linear-gradient(90deg,#0af,#4fc3ff); padding:10px 14px; border-radius:12px; font-weight:600; color:#02121a; display:inline-block; transition:0.3s; cursor:pointer; position:relative; overflow:hidden; }
-  .btn-primary::after{ content:""; position:absolute; inset:0; background:rgba(255,255,255,0.1); opacity:0; border-radius:12px; transition:0.3s; }
-  .btn-primary:hover::after{ opacity:1; }
-  .btn-primary:hover{ transform:scale(1.05); }
-  .mini-logo { width:80px;height:80px;border-radius:50%; transition:0.3s; }
-  .mini-logo:hover { transform:scale(1.2) rotate(10deg); }
-
-  .store-btn { display:block; margin:6px auto; width:200px; text-align:center; }
-
-  /* Music Player Footer */
-  .ws-player { position:fixed; left:12px; right:12px; bottom:12px; background:linear-gradient(90deg,rgba(10,170,255,0.07),rgba(10,170,255,0.02)); backdrop-filter:blur(8px); padding:12px; border-radius:14px; display:flex; align-items:center; gap:12px; z-index:999; box-shadow:0 0 20px rgba(10,170,255,0.3);}
-  .ws-player img { width:62px; height:62px; border-radius:10px; object-fit:cover; border:1px solid rgba(255,255,255,0.03); }
-  .ws-progress{ width:200px; height:6px; background:rgba(255,255,255,0.03); border-radius:8px; overflow:hidden; }
-  .ws-progress>div{height:100%; width:0; background:linear-gradient(90deg,#0af,#7be1ff);}
-  /* Glowing animation when playing */
-  .glow {
-    animation: glowAnim 1.5s infinite alternate;
-  }
-  @keyframes glowAnim {
-    0%{ box-shadow: 0 0 10px #0af; }
-    50%{ box-shadow: 0 0 25px #0ff; }
-    100%{ box-shadow: 0 0 15px #4fc3ff; }
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: 
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: -1;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
   }
 
-  /* Footer & Social Icons */
-  .powered { text-align:center; font-size:13px; color:#777; margin-top:10px; }
-  .footer-social { text-align:center; margin-top:6px; display:flex; justify-content:center; gap:14px; }
-  .footer-social a{ color:#0af; font-size:18px; transition:0.3s; }
-  .footer-social a:hover{ color:#0ff; transform:scale(1.2); }
-
-  /* Text colors */
-  .text-primary{ color:#0af; font-weight:600; text-decoration:none; }
-  .text-green{ color:#4fff4f; }
-  .text-pink{ color:#ff6fff; }
-  .text-yellow{ color:#ffff66; }
-  .text-blue{ color:#66ccff; }
-  .text-purple{ color:#cc99ff; }
-
-  /* Ripple effect for buttons */
-  .btn-primary:active::after {
-    opacity: 0.3;
-    transform: scale(1.2);
-    transition: 0s;
+  /* --- Typography --- */
+  h1, h2, h3 { font-family: 'Orbitron', sans-serif; }
+  
+  .text-glow {
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
   }
+
+  /* --- Animations --- */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-float { animation: float 4s ease-in-out infinite; }
+  .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+  .delay-1 { animation-delay: 0.2s; }
+  .delay-2 { animation-delay: 0.4s; }
+  .delay-3 { animation-delay: 0.6s; }
+
+  /* --- Components --- */
+  
+  /* Logo */
+  .logo-container {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+  }
+  .logo-img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 3px solid var(--primary-color);
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+    object-fit: cover;
+  }
+
+  /* Glass Cards */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-25deg);
+    transition: 0.5s;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 30px -10px rgba(0, 229, 255, 0.3);
+  }
+  
+  .glass-card:hover::before { left: 150%; }
+
+  /* Buttons */
+  .btn-neon {
+    background: linear-gradient(45deg, var(--primary-color), #0099ff);
+    color: #000;
+    font-weight: 700;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+  }
+  .btn-neon:hover {
+    background: linear-gradient(45deg, #0099ff, var(--primary-color));
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
+    color: #fff;
+  }
+
+  /* Section Titles */
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: linear-gradient(to right, #fff, var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  /* Music Player */
+  .ws-player-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    z-index: 1000;
+  }
+  
+  .ws-player {
+    background: rgba(10, 10, 20, 0.85);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 20px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transition: 0.3s;
+  }
+  
+  .ws-player.playing {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+  }
+
+  .album-art {
+    width: 55px; height: 55px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2);
+    animation: spin 8s linear infinite;
+    animation-play-state: paused;
+  }
+  .playing .album-art { animation-play-state: running; border-color: var(--primary-color); }
+  
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+
+  .progress-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+  .progress-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; margin-top: 5px; }
+  .progress-fill { height: 100%; width: 0%; background: var(--primary-color); transition: width 0.1s linear; box-shadow: 0 0 10px var(--primary-color); }
+  
+  .controls button { color: #fff; font-size: 1.2rem; margin: 0 8px; transition: 0.3s; background: none; border: none; cursor: pointer; }
+  .controls button:hover { color: var(--primary-color); transform: scale(1.2); }
+  .btn-play { background: #fff !important; color: #000 !important; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+
+  /* Utilities */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 10px;
+  }
+
 </style>
 </head>
-<body>
+<body class="antialiased">
 
-<!-- Header / Logo -->
-<header class="text-center py-6">
-  <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg" alt="WhiteShadow MD" class="logo-anim mb-3">
-  <h1 class="text-4xl font-bold text-indigo-400">WHITESHADOW-MD Main Bot</h1>
-  <p class="text-gray-400 mt-2">Owner: Chamod Nimsara | Smart Automation | Version:4.0.4</p>
+<header class="text-center pt-10 pb-5 fade-in-up">
+  <div class="logo-container animate-float">
+    <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg" alt="WhiteShadow MD" class="logo-img">
+  </div>
+  <h1 class="text-4xl md:text-5xl font-bold mt-5 text-glow">WHITESHADOW-MD</h1>
+  <p class="text-gray-400 mt-2 text-sm tracking-widest uppercase">The Ultimate WhatsApp Automation</p>
+  <div class="mt-2 text-xs text-blue-300 border border-blue-500/30 inline-block px-3 py-1 rounded-full bg-blue-500/10">Version 4.0.4</div>
 </header>
 
-<!-- Special Features -->
-<section class="p-5">
-  <h2 class="section-title text-yellow">Special Features</h2>
-  <div class="grid-3">
-    <a href="https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="card btn-primary">Main Bot Repo</a>
-    <a href="https://heroku.com/deploy?template=https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="card btn-primary">Heroku Deploy Template</a>
-    <button class="card btn-primary" onclick="window.open('https://whiteshadow-wabot.onrender.com','_blank')">Pair Site 1</button>
-    <button class="card btn-primary" onclick="window.open('https://paie-x8ed.onrender.com/pair','_blank')">Pair Site 2</button>
-    <button class="card btn-primary" onclick="window.open('https://whiteshadow-md-main.onrender.com','_blank')">Pair Site 3</button>
-  </div>
-</section>
-
-<!-- Mini Bot Servers -->
-<section class="p-5">
-  <h2 class="section-title text-green">Mini Bot Servers</h2>
-  <div class="grid-3">
-    <a href="https://dggffghhhhhh-9d386825e576.herokuapp.com" target="_blank" class="card">
-      <img src="https://files.catbox.moe/fj19m9.jpg" class="mini-logo mb-2">
-      <h3 class="font-semibold text-lg">Mini Bot 1</h3>
+<section class="max-w-6xl mx-auto p-5 fade-in-up delay-1">
+  <div class="text-center"><h2 class="section-title">Special Features</h2></div>
+  <div class="grid-container">
+    <a href="https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="glass-card btn-neon flex flex-col items-center justify-center text-center">
+      <i class="fa-brands fa-github text-3xl mb-2"></i>
+      <span>Main Bot Repo</span>
     </a>
-    <a href="https://whiteshadow-mini-bot-wa.onrender.com" target="_blank" class="card">
-      <img src="https://files.catbox.moe/fj19m9.jpg" class="mini-logo mb-2">
-      <h3 class="font-semibold text-lg">Mini Bot 2</h3>
+    <a href="https://heroku.com/deploy?template=https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="glass-card btn-neon flex flex-col items-center justify-center text-center">
+      <i class="fa-solid fa-cloud-arrow-up text-3xl mb-2"></i>
+      <span>Deploy on Heroku</span>
     </a>
-    <a href="https://whiteshadow-mini-bot-wa.onrender.com" target="_blank" class="card">
-      <img src="https://files.catbox.moe/fj19m9.jpg" class="mini-logo mb-2">
-      <h3 class="font-semibold text-lg">Mini Bot 3</h3>
+    <button onclick="window.open('https://whiteshadow-wabot.onrender.com','_blank')" class="glass-card btn-neon">Pair Site 1</button>
+    <button onclick="window.open('https://paie-x8ed.onrender.com/pair','_blank')" class="glass-card btn-neon">Pair Site 2</button>
+    <button onclick="window.open('https://whiteshadow-md-main.onrender.com','_blank')" class="glass-card btn-neon">Pair Site 3</button>
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto p-5 fade-in-up delay-2">
+  <div class="text-center"><h2 class="section-title text-green-400" style="-webkit-text-fill-color: #4fff4f;">Mini Bot Servers</h2></div>
+  <div class="grid-container">
+    
+    <a href="https://whiteshadow-md-max-fe33acb673a6.herokuapp.com/" target="_blank" class="glass-card group text-center block">
+      <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0024.jpg" class="w-20 h-20 mx-auto rounded-full mb-3 border-2 border-green-400 group-hover:scale-110 transition duration-500">
+      <h3 class="text-xl font-bold text-green-400 mb-1">Mini Bot Server 1</h3>
+      <p class="text-xs text-gray-400">High Speed • Optimized</p>
+      <div class="mt-3 px-4 py-1 bg-green-500/20 text-green-300 rounded-full text-xs inline-block">Online</div>
+    </a>
+
+    <a href="https://whiteshadow-md-max-fe33acb673a6.herokuapp.com/" target="_blank" class="glass-card group text-center block">
+      <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0024.jpg" class="w-20 h-20 mx-auto rounded-full mb-3 border-2 border-green-400 group-hover:scale-110 transition duration-500">
+      <h3 class="text-xl font-bold text-green-400 mb-1">Mini Bot Server 2</h3>
+      <p class="text-xs text-gray-400">High Speed • Optimized</p>
+      <div class="mt-3 px-4 py-1 bg-green-500/20 text-green-300 rounded-full text-xs inline-block">Online</div>
+    </a>
+
+    <a href="https://whiteshadow-md-max-fe33acb673a6.herokuapp.com/" target="_blank" class="glass-card group text-center block">
+      <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0024.jpg" class="w-20 h-20 mx-auto rounded-full mb-3 border-2 border-green-400 group-hover:scale-110 transition duration-500">
+      <h3 class="text-xl font-bold text-green-400 mb-1">Mini Bot Server 3</h3>
+      <p class="text-xs text-gray-400">High Speed • Optimized</p>
+      <div class="mt-3 px-4 py-1 bg-green-500/20 text-green-300 rounded-full text-xs inline-block">Online</div>
+    </a>
+
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto p-5 fade-in-up delay-3">
+  <div class="text-center"><h2 class="section-title text-blue-400" style="-webkit-text-fill-color: #66ccff;">Tools & Utilities</h2></div>
+  <div class="grid-container">
+    <a href="https://js-obfuscator-tool.netlify.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
+      <i class="fa-solid fa-code text-blue-400 text-3xl mb-2"></i>
+      <h4 class="font-bold">JS Obfuscator</h4>
+    </a>
+    <a href="https://qr-decoder-tool.netlify.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
+      <i class="fa-solid fa-qrcode text-blue-400 text-3xl mb-2"></i>
+      <h4 class="font-bold">QR Decoder</h4>
+    </a>
+    <a href="https://watermark-tool-six.vercel.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
+      <i class="fa-solid fa-copyright text-blue-400 text-3xl mb-2"></i>
+      <h4 class="font-bold">Watermark Tool</h4>
+    </a>
+    <a href="https://wp-unban-tool.vercel.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
+      <i class="fa-brands fa-whatsapp text-blue-400 text-3xl mb-2"></i>
+      <h4 class="font-bold">WA Unban</h4>
+    </a>
+    <a href="https://whiteshadow-ai.netlify.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
+      <i class="fa-solid fa-robot text-blue-400 text-3xl mb-2"></i>
+      <h4 class="font-bold">AI Chat</h4>
     </a>
   </div>
 </section>
 
-<!-- Tools Section -->
-<section class="p-5">
-  <h2 class="section-title text-blue">Tools</h2>
-  <div class="grid-3">
-    <a href="https://js-obfuscator-tool.netlify.app/" target="_blank" class="card btn-primary">JS Obfuscator</a>
-    <a href="https://qr-decoder-tool.netlify.app/" target="_blank" class="card btn-primary">QR Decoder</a>
-    <a href="https://watermark-tool-six.vercel.app/" target="_blank" class="card btn-primary">Watermark Tool</a>
-    <a href="https://wp-unban-tool.vercel.app/" target="_blank" class="card btn-primary">WhatsApp Unban</a>
-    <a href="https://crash-delta-ai.vercel.app/" target="_blank" class="card btn-primary">AI Chat Tool 1</a>
-    <a href="https://whiteshadow-ai.netlify.app/" target="_blank" class="card btn-primary">AI Chat Tool 2</a>
-  </div>
-</section>
-
-<!-- Store Section -->
-<section class="p-5">
-  <h2 class="section-title text-orange-400">Store</h2>
-  <div class="grid-3 text-center">
-    <a href="https://wa.me/94704896880?text=Buy%20Render%20Free%20Plan" target="_blank" class="card btn-primary store-btn">Render Account - 200/=</a>
-    <a href="https://wa.me/94704896880?text=Buy%20Plugin" target="_blank" class="card btn-primary store-btn">Plugin - 60/=</a>
-    <a href="https://wa.me/94704896880?text=Buy%20MiniBot%20Base" target="_blank" class="card btn-primary store-btn">MiniBot Base - 250/=</a>
-    <a href="https://wa.me/94704896880?text=Buy%20Bot%20Deploy" target="_blank" class="card btn-primary store-btn">Bot Deploy (Heroku 1 month) - 200/=</a>
-  </div>
-</section>
-
-<!-- About Section -->
-<section class="p-5">
-  <h2 class="section-title text-purple">About WHITESHADOW-MD</h2>
-  <p>WHITESHADOW-MD is a modern, multi-functional WhatsApp bot with rich features like viewonce download, anti-delete, channel uploads, song download from TikTok/FB/IG/YT, Web2Zip, and many more.</p>
-  <p class="mt-2">Follow our TikTok: <a href="https://www.tiktok.com/@white.shadow468?_t=ZS-903M0JpWH3w&_r=1" class="text-pink underline">White.Shadow468</a></p>
-  <p class="mt-1">Official Channels:</p>
-  <ul class="list-disc list-inside">
-    <li><a href="https://whatsapp.com/channel/0029Vak4dFAHQbSBzyxlGG13" class="text-green underline" target="_blank">Channel 1</a></li>
-    <li><a href="https://whatsapp.com/channel/0029Vb4bj5zI7BeFm6aM8O1p" class="text-green underline" target="_blank">Channel 2</a></li>
-  </ul>
-</section>
-
-<!-- Footer Music Player -->
-<div class="ws-player" id="ws-player">
-  <img id="playerCover" src="https://files.catbox.moe/xta6u1.jpg" alt="cover">
-  <div class="info">
-    <h4 id="playerTitle">Nidahasi</h4>
-    <p id="playerArtist" class="text-sm">Smokio</p>
-    <div class="flex items-center gap-2 mt-1">
-      <div class="ws-progress"><div id="wsProgressBar"></div></div>
-      <div class="flex gap-2">
-        <button id="prevBtn"><i class="fa-solid fa-backward-step"></i></button>
-        <button id="playPauseBtn" style="transform:scale(1.2)"><i id="playIcon" class="fa-solid fa-play"></i></button>
-        <button id="nextBtn"><i class="fa-solid fa-forward-step"></i></button>
-      </div>
+<section class="max-w-4xl mx-auto p-5 fade-in-up delay-3">
+  <div class="glass-card p-6">
+    <h2 class="text-2xl font-bold text-center text-orange-400 mb-6 font-orbitron">PREMIUM STORE</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <a href="https://wa.me/94704896880?text=Buy%20Render%20Free%20Plan" class="block p-3 border border-orange-500/30 rounded-lg hover:bg-orange-500/10 transition flex justify-between items-center">
+        <span><i class="fa-solid fa-server text-orange-400 mr-2"></i>Render Account</span>
+        <span class="font-bold text-orange-400">200 LKR</span>
+      </a>
+      <a href="https://wa.me/94704896880?text=Buy%20Plugin" class="block p-3 border border-orange-500/30 rounded-lg hover:bg-orange-500/10 transition flex justify-between items-center">
+        <span><i class="fa-solid fa-plug text-orange-400 mr-2"></i>Bot Plugin</span>
+        <span class="font-bold text-orange-400">60 LKR</span>
+      </a>
+      <a href="https://wa.me/94704896880?text=Buy%20MiniBot%20Base" class="block p-3 border border-orange-500/30 rounded-lg hover:bg-orange-500/10 transition flex justify-between items-center">
+        <span><i class="fa-solid fa-robot text-orange-400 mr-2"></i>MiniBot Base</span>
+        <span class="font-bold text-orange-400">250 LKR</span>
+      </a>
+      <a href="https://wa.me/94704896880?text=Buy%20Bot%20Deploy" class="block p-3 border border-orange-500/30 rounded-lg hover:bg-orange-500/10 transition flex justify-between items-center">
+        <span><i class="fa-solid fa-rocket text-orange-400 mr-2"></i>Heroku Deploy</span>
+        <span class="font-bold text-orange-400">200 LKR</span>
+      </a>
     </div>
   </div>
-  <a id="downloadLink" href="https://files.catbox.moe/sv4e8r.mp3" download class="text-primary">Download</a>
-</div>
-<audio id="audio" src="https://files.catbox.moe/sv4e8r.mp3" preload="metadata"></audio>
+</section>
 
-<div class="powered">Powered by WHITESHADOW ©2026</div>
-<div class="footer-social">
-  <a href="https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank"><i class="fa-brands fa-github"></i></a>
-  <a href="https://whatsapp.com/channel/0029Vak4dFAHQbSBzyxlGG13" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-  <a href="https://www.tiktok.com/@white.shadow468?_t=ZS-903M0JpWH3w&_r=1" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+<section class="max-w-4xl mx-auto p-5 pb-20 fade-in-up delay-3 text-center">
+  <h2 class="text-purple-400 text-2xl font-bold mb-4 font-orbitron">About WHITESHADOW-MD</h2>
+  <p class="text-gray-300 leading-relaxed">
+    Experience the next generation of WhatsApp automation. Features include ViewOnce downloader, Anti-Delete, Social Media downloaders (TikTok, FB, IG, YT), and AI integration.
+  </p>
+  <div class="mt-6 flex justify-center gap-6">
+    <a href="https://whatsapp.com/channel/0029Vak4dFAHQbSBzyxlGG13" target="_blank" class="text-3xl text-green-500 hover:text-green-400 hover:scale-125 transition"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="https://www.tiktok.com/@white.shadow468?_t=ZS-903M0JpWH3w&_r=1" target="_blank" class="text-3xl text-pink-500 hover:text-pink-400 hover:scale-125 transition"><i class="fa-brands fa-tiktok"></i></a>
+    <a href="https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="text-3xl text-white hover:text-gray-300 hover:scale-125 transition"><i class="fa-brands fa-github"></i></a>
+  </div>
+  <p class="mt-8 text-xs text-gray-500">Powered by WHITESHADOW © 2026</p>
+</section>
+
+<div class="ws-player-container">
+  <div class="ws-player" id="wsPlayer">
+    <img src="https://i.ytimg.com/vi_webp/Ljuk6KPsSAc/maxresdefault.webp" alt="Album Art" class="album-art" id="albumArt">
+    
+    <div class="progress-area">
+      <div class="flex justify-between items-end mb-1">
+        <div>
+          <h4 class="text-sm font-bold text-white truncate w-32">Nidahasi</h4>
+          <p class="text-xs text-gray-400">Smokio</p>
+        </div>
+        <a href="https://cdn402.savetube.vip/media/Ljuk6KPsSAc/nidahasi-128-ytshorts.savetube.me.mp3" download class="text-xs text-cyan-400 hover:text-white"><i class="fa-solid fa-download"></i></a>
+      </div>
+      <div class="progress-bar-bg" id="progressBarBg">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div class="controls flex items-center">
+      <button id="prevBtn"><i class="fa-solid fa-backward-step"></i></button>
+      <button id="playPauseBtn" class="btn-play"><i id="playIcon" class="fa-solid fa-play"></i></button>
+      <button id="nextBtn"><i class="fa-solid fa-forward-step"></i></button>
+    </div>
+  </div>
 </div>
+
+<audio id="audio" src="https://cdn402.savetube.vip/media/Ljuk6KPsSAc/nidahasi-128-ytshorts.savetube.me.mp3" preload="metadata"></audio>
 
 <script>
-  const audio=document.getElementById('audio');
-  const playBtn=document.getElementById('playPauseBtn');
-  const playIcon=document.getElementById('playIcon');
-  const progressBar=document.getElementById('wsProgressBar');
-  const wsPlayer=document.getElementById('ws-player');
-
-  playBtn.addEventListener('click',()=>{
-    if(audio.paused){
+  const audio = document.getElementById('audio');
+  const playBtn = document.getElementById('playPauseBtn');
+  const playIcon = document.getElementById('playIcon');
+  const progressFill = document.getElementById('progressFill');
+  const wsPlayer = document.getElementById('wsPlayer');
+  
+  // Play/Pause Toggle
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
       audio.play();
-      wsPlayer.classList.add('glow');
-    }else{
+      wsPlayer.classList.add('playing');
+      playIcon.className = 'fa-solid fa-pause';
+    } else {
       audio.pause();
-      wsPlayer.classList.remove('glow');
+      wsPlayer.classList.remove('playing');
+      playIcon.className = 'fa-solid fa-play';
     }
   });
 
-  audio.addEventListener('play',()=>{ playIcon.className='fa-solid fa-pause'; wsPlayer.classList.add('glow'); });
-  audio.addEventListener('pause',()=>{ playIcon.className='fa-solid fa-play'; wsPlayer.classList.remove('glow'); });
-  audio.addEventListener('timeupdate',()=>{ if(audio.duration){progressBar.style.width=(audio.currentTime/audio.duration*100)+'%'} });
-  document.getElementById('prevBtn').addEventListener('click',()=>audio.currentTime=0);
-  document.getElementById('nextBtn').addEventListener('click',()=>audio.currentTime=audio.duration||0);
+  // Update Progress Bar
+  audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progressFill.style.width = percent + '%';
+    }
+  });
+
+  // Reset when ended
+  audio.addEventListener('ended', () => {
+    wsPlayer.classList.remove('playing');
+    playIcon.className = 'fa-solid fa-play';
+    progressFill.style.width = '0%';
+  });
+
+  // Simple prev/next (Restart track for now as there's 1 song)
+  document.getElementById('prevBtn').addEventListener('click', () => audio.currentTime = 0);
+  document.getElementById('nextBtn').addEventListener('click', () => audio.currentTime = audio.duration || 0);
+  
+  // Click on progress bar to seek
+  document.getElementById('progressBarBg').addEventListener('click', (e) => {
+    const width = e.target.clientWidth; // Width of the bar
+    const clickX = e.offsetX; // Click position
+    const duration = audio.duration;
+    
+    audio.currentTime = (clickX / width) * duration;
+  });
+
 </script>
 
 </body>
-  </html>
+</html>
