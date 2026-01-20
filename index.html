@@ -1,400 +1,592 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>WHITESHADOW-MD Wa Bot</title>
+<title>WHITESHADOW-MD | Ultimate Automation</title>
 <link rel="icon" href="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-  /* --- Global Styles --- */
+  /* --- Global & Variables --- */
   :root {
-    --primary-color: #00e5ff;
-    --secondary-color: #7b2cbf;
-    --bg-dark: #050505;
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
+    --primary: #00f2ff;
+    --secondary: #bc13fe;
+    --bg-dark: #02040a;
+    --glass: rgba(20, 20, 35, 0.7);
+    --border: rgba(255, 255, 255, 0.08);
   }
 
   body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     background-color: var(--bg-dark);
     color: #fff;
     overflow-x: hidden;
-    min-height: 100vh;
-    padding-bottom: 180px;
-    background-image: 
-      radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.15) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(123, 44, 191, 0.15) 0%, transparent 40%);
   }
 
-  /* Grid Background Effect */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: 
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    z-index: -1;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
-  }
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: linear-gradient(var(--primary), var(--secondary)); border-radius: 4px; }
 
-  /* --- Typography --- */
-  h1, h2, h3 { font-family: 'Orbitron', sans-serif; }
-  
-  .text-glow {
-    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+  /* --- 1. SUPERB LOADING ANIMATION --- */
+  #preloader {
+    position: fixed; inset: 0;
+    background: #000; z-index: 9999;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
   }
-
-  /* --- Animations --- */
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-15px); }
-  }
-  
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .animate-float { animation: float 4s ease-in-out infinite; }
-  .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
-  .delay-1 { animation-delay: 0.2s; }
-  .delay-2 { animation-delay: 0.4s; }
-  .delay-3 { animation-delay: 0.6s; }
-
-  /* --- Components --- */
-  
-  /* Logo */
-  .logo-container {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    margin: 0 auto;
-  }
-  .logo-img {
-    width: 100%; height: 100%;
+  .loader-ring {
+    width: 120px; height: 120px;
+    border: 4px solid transparent;
+    border-top: 4px solid var(--primary);
+    border-right: 4px solid var(--secondary);
     border-radius: 50%;
-    border: 3px solid var(--primary-color);
-    box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
-    object-fit: cover;
-  }
-
-  /* Glass Cards */
-  .glass-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 24px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: spin 1s linear infinite;
     position: relative;
-    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
   }
+  .loader-ring::before {
+    content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
+    border: 4px solid transparent; border-top: 4px solid var(--secondary);
+    border-radius: 50%; animation: spin-reverse 1.5s linear infinite;
+  }
+  .loader-text {
+    margin-top: 20px; font-family: 'Orbitron'; letter-spacing: 3px;
+    color: var(--primary); font-size: 14px; animation: pulse 1s infinite alternate;
+  }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  @keyframes spin-reverse { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+  @keyframes pulse { 0% { opacity: 0.5; } 100% { opacity: 1; text-shadow: 0 0 10px var(--primary); } }
 
-  .glass-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: -100%;
-    width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transform: skewX(-25deg);
-    transition: 0.5s;
-  }
-
-  .glass-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    border-color: var(--primary-color);
-    box-shadow: 0 10px 30px -10px rgba(0, 229, 255, 0.3);
-  }
-  
-  .glass-card:hover::before { left: 150%; }
-
-  /* Buttons */
-  .btn-neon {
-    background: linear-gradient(45deg, var(--primary-color), #0099ff);
-    color: #000;
-    font-weight: 700;
-    border: none;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
-  }
-  .btn-neon:hover {
-    background: linear-gradient(45deg, #0099ff, var(--primary-color));
-    box-shadow: 0 0 25px rgba(0, 229, 255, 0.7);
-    color: #fff;
-  }
-
-  /* Section Titles */
-  .section-title {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    background: linear-gradient(to right, #fff, var(--primary-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-  }
-
-  /* Music Player */
-  .ws-player-container {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 600px;
-    z-index: 1000;
-  }
-  
-  .ws-player {
-    background: rgba(10, 10, 20, 0.85);
+  /* --- 2. NAVIGATION BAR --- */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(2, 4, 10, 0.8);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 229, 255, 0.2);
-    border-radius: 20px;
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid var(--border);
     transition: 0.3s;
   }
-  
-  .ws-player.playing {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+  .nav-link {
+    position: relative; color: #ccc; font-weight: 600; text-transform: uppercase;
+    font-size: 0.9rem; letter-spacing: 1px; padding: 5px 10px; transition: 0.3s;
   }
-
-  .album-art {
-    width: 55px; height: 55px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.2);
-    animation: spin 8s linear infinite;
-    animation-play-state: paused;
+  .nav-link:hover, .nav-link.active { color: var(--primary); }
+  .nav-link::after {
+    content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0;
+    background: var(--primary); transition: 0.3s;
   }
-  .playing .album-art { animation-play-state: running; border-color: var(--primary-color); }
-  
-  @keyframes spin { 100% { transform: rotate(360deg); } }
+  .nav-link:hover::after { width: 100%; }
 
-  .progress-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
-  .progress-bar-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; margin-top: 5px; }
-  .progress-fill { height: 100%; width: 0%; background: var(--primary-color); transition: width 0.1s linear; box-shadow: 0 0 10px var(--primary-color); }
-  
-  .controls button { color: #fff; font-size: 1.2rem; margin: 0 8px; transition: 0.3s; background: none; border: none; cursor: pointer; }
-  .controls button:hover { color: var(--primary-color); transform: scale(1.2); }
-  .btn-play { background: #fff !important; color: #000 !important; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
-
-  /* Utilities */
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 10px;
+  /* Mobile Menu */
+  #mobile-menu {
+    transform: translateY(-150%); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  #mobile-menu.open { transform: translateY(0); }
 
+  /* --- 3. GLASS CARDS & UI --- */
+  .glass-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: 0.4s;
+    position: relative; overflow: hidden;
+  }
+  .glass-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 0 25px rgba(0, 242, 255, 0.15);
+  }
+  
+  /* Text Gradients */
+  .text-gradient {
+    background: linear-gradient(90deg, var(--primary), #fff, var(--secondary));
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textShine 3s linear infinite;
+  }
+  @keyframes textShine { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+
+  /* Hero Animation */
+  .typing-cursor::after {
+    content: '|'; animation: blink 1s step-start infinite; color: var(--primary);
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Terminal Window Style */
+  .terminal-window {
+    background: #0c0c16;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 1px solid #333;
+    font-family: 'Fira Code', monospace;
+    overflow: hidden;
+  }
+  .terminal-header {
+    background: #1a1a2e;
+    padding: 10px 15px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid #333;
+  }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot-red { background: #ff5f56; }
+  .dot-yellow { background: #ffbd2e; }
+  .dot-green { background: #27c93f; }
+  
+  /* Special Button Styles */
+  .btn-hosting {
+    background: linear-gradient(45deg, #ff9100, #ff0055);
+    position: relative; overflow: hidden; z-index: 1;
+  }
+  .btn-hosting::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(45deg, #ff0055, #ff9100);
+    opacity: 0; transition: 0.3s; z-index: -1;
+  }
+  .btn-hosting:hover::before { opacity: 1; }
+
+  /* Modal for Channels */
+  #channel-modal {
+    opacity: 0; visibility: hidden; transition: 0.5s;
+  }
+  #channel-modal.active {
+    opacity: 1; visibility: visible;
+  }
+  
 </style>
 </head>
-<body class="antialiased">
+<body class="loading">
 
-<header class="text-center pt-10 pb-5 fade-in-up">
-  <div class="logo-container animate-float">
-    <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg" alt="WhiteShadow MD" class="logo-img">
-  </div>
-  <h1 class="text-4xl md:text-5xl font-bold mt-5 text-glow">WHITESHADOW-MD</h1>
-  <p class="text-gray-400 mt-2 text-sm tracking-widest uppercase">The Ultimate WhatsApp Automation</p>
-  <div class="mt-2 text-xs text-blue-300 border border-blue-500/30 inline-block px-3 py-1 rounded-full bg-blue-500/10">Version 4.0.4</div>
-</header>
+<div id="preloader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">INITIALIZING SYSTEM...</div>
+  <div class="mt-2 text-gray-500 text-xs font-mono" id="load-percent">0%</div>
+</div>
 
-<section class="max-w-6xl mx-auto p-5 fade-in-up delay-1">
-  <div class="text-center"><h2 class="section-title">Special Features</h2></div>
-  <div class="grid-container">
-    <a href="https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="glass-card btn-neon flex flex-col items-center justify-center text-center">
-      <i class="fa-brands fa-github text-3xl mb-2"></i>
-      <span>Main Bot Repo</span>
-    </a>
-    <a href="https://heroku.com/deploy?template=https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="glass-card btn-neon flex flex-col items-center justify-center text-center">
-      <i class="fa-solid fa-cloud-arrow-up text-3xl mb-2"></i>
-      <span>Deploy on Heroku</span>
-    </a>
-    <button onclick="window.open('https://whiteshadow-wabot.onrender.com','_blank')" class="glass-card btn-neon">Pair Site 1</button>
-    <button onclick="window.open('https://paie-x8ed.onrender.com/pair','_blank')" class="glass-card btn-neon">Pair Site 2</button>
-    <button onclick="window.open('https://whiteshadow-md-main.onrender.com','_blank')" class="glass-card btn-neon">Pair Site 3</button>
-  </div>
-</section>
-
-<section class="max-w-6xl mx-auto p-5 fade-in-up delay-2">
-  <div class="text-center"><h2 class="section-title text-green-400" style="-webkit-text-fill-color: #4fff4f;">Mini Bot Servers</h2></div>
-  <div class="grid-container">
+<div id="channel-modal" class="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-5">
+  <div class="glass-card max-w-md w-full p-8 text-center border-cyan-500/30 relative transform scale-90 transition-transform duration-300" id="modal-box">
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <div class="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center mx-auto mb-4 text-cyan-400 text-3xl animate-bounce">
+      <i class="fa-brands fa-whatsapp"></i>
+    </div>
+    <h3 class="text-2xl font-bold font-orbitron mb-2">STAY UPDATED!</h3>
+    <p class="text-gray-400 mb-6 text-sm">Join our official WhatsApp channels for the latest updates, downtime notices, and new features.</p>
     
-    <a href="https://whiteshadow-md-max-fe33acb673a6.herokuapp.com/" target="_blank" class="glass-card group text-center block">
-      <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0024.jpg" class="w-20 h-20 mx-auto rounded-full mb-3 border-2 border-green-400 group-hover:scale-110 transition duration-500">
-      <h3 class="text-xl font-bold text-green-400 mb-1">Mini Bot Server 1</h3>
-      <p class="text-xs text-gray-400">High Speed • Optimized</p>
-      <div class="mt-3 px-4 py-1 bg-green-500/20 text-green-300 rounded-full text-xs inline-block">Online</div>
-    </a>
+    <div class="flex flex-col gap-3">
+      <a href="https://whatsapp.com/channel/0029Vak4dFAHQbSBzyxlGG13" target="_blank" class="w-full py-3 bg-[#25D366] hover:bg-[#1ebd59] text-black font-bold rounded-lg transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-bell"></i> FOLLOW CHANNEL 1
+      </a>
+      <a href="https://whatsapp.com/channel/0029Vb4bj5zI7BeFm6aM8O1p" target="_blank" class="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-lg border border-white/20 transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-rss"></i> FOLLOW CHANNEL 2
+      </a>
+    </div>
+  </div>
+</div>
 
-    <a href="https://whiteshadow-md-max-fe33acb673a6.herokuapp.com/" target="_blank" class="glass-card group text-center block">
-      <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0024.jpg" class="w-20 h-20 mx-auto rounded-full mb-3 border-2 border-green-400 group-hover:scale-110 transition duration-500">
-      <h3 class="text-xl font-bold text-green-400 mb-1">Mini Bot Server 2</h3>
-      <p class="text-xs text-gray-400">High Speed • Optimized</p>
-      <div class="mt-3 px-4 py-1 bg-green-500/20 text-green-300 rounded-full text-xs inline-block">Online</div>
-    </a>
+<nav class="px-6 py-4 flex justify-between items-center">
+  <div class="flex items-center gap-3">
+    <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg" class="w-10 h-10 rounded-full border border-cyan-400 animate-pulse">
+    <span class="text-xl font-bold font-orbitron tracking-wider text-white">WS-MD</span>
+  </div>
+  
+  <div class="hidden md:flex gap-8">
+    <a href="#home" class="nav-link active">Home</a>
+    <a href="#mainbot" class="nav-link">Main Bot</a>
+    <a href="#minibot" class="nav-link">Mini Bot</a>
+    <a href="#tools" class="nav-link">Tools</a>
+    <a href="#store" class="nav-link">Store</a>
+  </div>
 
-    <a href="https://whiteshadow-md-max-fe33acb673a6.herokuapp.com/" target="_blank" class="glass-card group text-center block">
-      <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0024.jpg" class="w-20 h-20 mx-auto rounded-full mb-3 border-2 border-green-400 group-hover:scale-110 transition duration-500">
-      <h3 class="text-xl font-bold text-green-400 mb-1">Mini Bot Server 3</h3>
-      <p class="text-xs text-gray-400">High Speed • Optimized</p>
-      <div class="mt-3 px-4 py-1 bg-green-500/20 text-green-300 rounded-full text-xs inline-block">Online</div>
-    </a>
+  <button id="menu-btn" class="md:hidden text-2xl text-cyan-400 focus:outline-none">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+</nav>
 
+<div id="mobile-menu" class="fixed top-[70px] left-0 w-full bg-[#050510]/95 backdrop-blur-xl z-50 border-b border-gray-800 p-5 flex flex-col gap-4 text-center md:hidden">
+  <a href="#home" class="py-2 hover:text-cyan-400 border-b border-gray-800" onclick="toggleMenu()">Home</a>
+  <a href="#mainbot" class="py-2 hover:text-cyan-400 border-b border-gray-800" onclick="toggleMenu()">Main Bot</a>
+  <a href="#minibot" class="py-2 hover:text-cyan-400 border-b border-gray-800" onclick="toggleMenu()">Mini Bot</a>
+  <a href="#tools" class="py-2 hover:text-cyan-400 border-b border-gray-800" onclick="toggleMenu()">Tools</a>
+  <a href="#store" class="py-2 hover:text-cyan-400" onclick="toggleMenu()">Store</a>
+</div>
+
+<section id="home" class="min-h-screen flex flex-col items-center justify-center text-center px-5 pt-20 relative">
+  <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/20 rounded-full blur-[100px] -z-10"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/20 rounded-full blur-[100px] -z-10"></div>
+
+  <div class="mb-6 relative">
+    <img src="https://raw.githubusercontent.com/cnw-db/WHITESHADOW-MD-/refs/heads/main/IMG-20250926-WA0023.jpg" class="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-cyan-400/30 shadow-[0_0_50px_rgba(0,242,255,0.3)] mx-auto object-cover">
+    <div class="absolute -bottom-2 -right-2 bg-green-500 text-black text-xs font-bold px-3 py-1 rounded-full">ONLINE</div>
+  </div>
+
+  <h1 class="text-5xl md:text-7xl font-bold font-orbitron mb-4 text-gradient">WHITESHADOW-MD</h1>
+  <p class="text-xl md:text-2xl text-gray-300 font-light mb-8 h-8 typing-cursor"><span id="typewriter"></span></p>
+
+  <div class="flex flex-wrap justify-center gap-4">
+    <a href="#minibot" class="px-8 py-3 rounded-full bg-cyan-500/10 border border-cyan-500/50 text-cyan-400 hover:bg-cyan-500 hover:text-black transition duration-300 font-bold tracking-wide">
+      <i class="fa-solid fa-robot mr-2"></i> GET MINI BOT
+    </a>
+    <a href="#mainbot" class="px-8 py-3 rounded-full bg-purple-500/10 border border-purple-500/50 text-purple-400 hover:bg-purple-500 hover:text-white transition duration-300 font-bold tracking-wide">
+      <i class="fa-solid fa-star mr-2"></i> MAIN BOT
+    </a>
   </div>
 </section>
 
-<section class="max-w-6xl mx-auto p-5 fade-in-up delay-3">
-  <div class="text-center"><h2 class="section-title text-blue-400" style="-webkit-text-fill-color: #66ccff;">Tools & Utilities</h2></div>
-  <div class="grid-container">
-    <a href="https://js-obfuscator-tool.netlify.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
-      <i class="fa-solid fa-code text-blue-400 text-3xl mb-2"></i>
-      <h4 class="font-bold">JS Obfuscator</h4>
+<section id="mainbot" class="py-20 px-5 max-w-7xl mx-auto border-b border-white/5">
+  <div class="flex flex-col md:flex-row items-center gap-12">
+    <div class="md:w-1/2">
+      <h2 class="text-3xl md:text-5xl font-bold font-orbitron mb-6"><span class="text-purple-400">MAIN</span> BOT</h2>
+      <p class="text-gray-300 leading-relaxed mb-6 text-lg">
+        The flagship <b>WhiteShadow MD</b> is designed for power users. It features an advanced <span class="text-cyan-400">Social Media Downloader</span> (TikTok, FB, Insta, YouTube), automated Group Management, and a crystal-clear <span class="text-purple-400">Music Player</span> for voice channels. Whether you need auto-reply, anti-link protection, or just fun commands, the Main Bot handles it all with zero lag.
+      </p>
+      
+      <div class="flex flex-wrap gap-4 mb-8">
+        <a href="https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="glass-card px-6 py-3 flex items-center gap-3 hover:bg-white/5">
+          <i class="fa-brands fa-github text-2xl"></i>
+          <div>
+            <div class="text-xs text-gray-400">Source Code</div>
+            <div class="font-bold">Repository</div>
+          </div>
+        </a>
+        <a href="https://heroku.com/deploy?template=https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="glass-card px-6 py-3 flex items-center gap-3 hover:bg-purple-900/20 border-purple-500/30">
+          <i class="fa-solid fa-rocket text-purple-400 text-2xl"></i>
+          <div>
+            <div class="text-xs text-gray-400">Deploy on</div>
+            <div class="font-bold text-purple-400">Heroku</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="glass-card p-6 border-cyan-500/20">
+        <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-link text-cyan-400"></i> GET SESSION CODE (PAIRING)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <a href="https://whiteshadow-md-main.onrender.com" target="_blank" class="py-2 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 text-center rounded border border-cyan-500/30 transition text-sm font-bold">Server 1</a>
+            <a href="https://newpair-biyv.onrender.com" target="_blank" class="py-2 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 text-center rounded border border-cyan-500/30 transition text-sm font-bold">Server 2</a>
+            <a href="https://paie-x8ed.onrender.com/pair" target="_blank" class="py-2 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 text-center rounded border border-cyan-500/30 transition text-sm font-bold">Server 3</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="md:w-1/2 relative">
+       <div class="terminal-window w-full">
+         <div class="terminal-header">
+           <div class="dot dot-red"></div>
+           <div class="dot dot-yellow"></div>
+           <div class="dot dot-green"></div>
+           <div class="text-xs text-gray-500 ml-2">whiteshadow-main — node index.js</div>
+         </div>
+         <div class="p-6 text-sm overflow-hidden relative h-64">
+            <div class="text-green-400 font-bold mb-2">Connected to WhatsApp! 🚀</div>
+            <div class="text-gray-400">> Loading Plugins... [DONE]</div>
+            <div class="text-gray-400">> Syncing Database... [DONE]</div>
+            <br>
+            <div class="text-purple-400">WHITESHADOW-MD V2.0.0</div>
+            <div class="text-gray-500">---------------------------------</div>
+            <div class="text-white">User: .song Nidahasi Smokio</div>
+            <div class="text-cyan-400">Bot: 🎵 Downloading Song...</div>
+            <div class="text-white">User: .fb https://facebook.com/...</div>
+            <div class="text-cyan-400">Bot: 🎬 Video Fetched Successfully!</div>
+         </div>
+       </div>
+    </div>
+  </div>
+</section>
+
+<section id="minibot" class="py-20 px-5 max-w-7xl mx-auto">
+  <h2 class="text-3xl md:text-4xl font-bold font-orbitron text-center mb-12"><span class="text-green-400">MINI BOT</span> SYSTEM</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+    <a href="https://whiteshadow-md-max-fe33acb673a6.herokuapp.com/" target="_blank" class="glass-card p-6 flex items-center gap-4 group">
+      <div class="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-2xl group-hover:scale-110 transition">
+        <i class="fa-solid fa-server"></i>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold">Server Alpha</h3>
+        <p class="text-xs text-green-400 flex items-center gap-1"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Operational</p>
+      </div>
+      <i class="fa-solid fa-arrow-right ml-auto text-gray-500 group-hover:text-white"></i>
     </a>
-    <a href="https://qr-decoder-tool.netlify.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
-      <i class="fa-solid fa-qrcode text-blue-400 text-3xl mb-2"></i>
+    <a href="https://whiteshadow-md-max-fe33acb673a6.herokuapp.com/" target="_blank" class="glass-card p-6 flex items-center gap-4 group">
+      <div class="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-2xl group-hover:scale-110 transition">
+        <i class="fa-solid fa-network-wired"></i>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold">Server Beta</h3>
+        <p class="text-xs text-green-400 flex items-center gap-1"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Operational</p>
+      </div>
+      <i class="fa-solid fa-arrow-right ml-auto text-gray-500 group-hover:text-white"></i>
+    </a>
+    <a href="https://whiteshadow-md-max-fe33acb673a6.herokuapp.com/" target="_blank" class="glass-card p-6 flex items-center gap-4 group">
+      <div class="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 text-2xl group-hover:scale-110 transition">
+        <i class="fa-solid fa-microchip"></i>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold">Server Gamma</h3>
+        <p class="text-xs text-green-400 flex items-center gap-1"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Operational</p>
+      </div>
+      <i class="fa-solid fa-arrow-right ml-auto text-gray-500 group-hover:text-white"></i>
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    
+    <div class="glass-card p-0 overflow-hidden border-green-500/30">
+        <div class="bg-[#111] p-3 border-b border-white/10 flex items-center justify-between">
+            <span class="text-sm font-mono text-green-400"><i class="fa-solid fa-terminal mr-2"></i>MiniBot Commands</span>
+            <div class="flex gap-1.5">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+        </div>
+        <div class="p-6 bg-[#050505] font-mono text-xs md:text-sm text-gray-300 max-h-[400px] overflow-y-auto">
+            <p class="text-green-500 mb-2">╭── [ 💾 DOWNLOADERS ] ──</p>
+            <p>│ 🎵 .song &lt;name&gt;</p>
+            <p>│ 🎬 .video &lt;name&gt;</p>
+            <p>│ 🎼 .spotify &lt;name&gt;</p>
+            <p>│ 🕺 .tiktok &lt;url&gt;</p>
+            <p>│ 📘 .fb &lt;url&gt;</p>
+            <p>│ 📸 .insta &lt;url&gt;</p>
+            <p>│ 🔞 .xham &lt;name&gt;</p>
+            <p>│ 📖️ .pastpaper &lt;name&gt;</p>
+            <p class="text-green-500 my-2">╭── [ 🔍 SEARCH & AI ] ───</p>
+            <p>│ 🧠 .ai &lt;question&gt;</p>
+            <p>│ 🪄 .gen &lt;prompt&gt;|&lt;style&gt;</p>
+            <p>│ 📜 .lyrics &lt;song&gt;</p>
+            <p>│ 🔎 .google &lt;text&gt;</p>
+            <p>│ 🧾 .yts (Youtube Search)</p>
+            <p>│ 🖼️ .img (Google Image)</p>
+            <p class="text-green-500 my-2">╭── [ 📰 NEWS & UPDATES ] ─</p>
+            <p>│ 🌍 .worldnews</p>
+            <p>│ 🇱🇰 .sinhalanews</p>
+            <p>│ 📺 .derana | .news1st</p>
+            <p class="text-green-500 my-2">╭── [ ⚙️ MAIN & OWNER ] ──</p>
+            <p>│ 🔗 .pair &lt;number&gt;</p>
+            <p>│ 📡 .ping | .alive</p>
+            <p>│ 📢 .hidetag &lt;text&gt;</p>
+            <p>│ ⚙️ .setting | .settings</p>
+            <p>│ 🚫 .block | .unblock</p>
+            <p>│ 📥 .save (Save Status)</p>
+        </div>
+    </div>
+
+    <div class="flex flex-col justify-center">
+        <h3 class="text-2xl font-bold mb-6 text-white"><i class="fa-solid fa-plug text-green-400 mr-2"></i> HOW TO CONNECT</h3>
+        
+        <div class="relative border-l-2 border-white/10 ml-3 pl-8 pb-8">
+            <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-green-500 shadow-[0_0_10px_#22c55e]"></span>
+            <h4 class="text-lg font-bold text-green-400">Step 1: Get Session</h4>
+            <p class="text-gray-400 text-sm mt-1">Use the "Main Bot" pair links above to generate your unique session ID. Keep it safe!</p>
+        </div>
+
+        <div class="relative border-l-2 border-white/10 ml-3 pl-8 pb-8">
+            <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border border-gray-600"></span>
+            <h4 class="text-lg font-bold text-white">Step 2: Database Setup</h4>
+            <p class="text-gray-400 text-sm mt-1">Create a MongoDB database. If you purchase the Premium setup, we handle this for you.</p>
+        </div>
+
+        <div class="relative border-l-2 border-white/10 ml-3 pl-8">
+            <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white border border-gray-600"></span>
+            <h4 class="text-lg font-bold text-white">Step 3: Deploy & Scan</h4>
+            <p class="text-gray-400 text-sm mt-1">Deploy the bot to Render or Heroku using the variables. Scan the QR code if prompted. You are online!</p>
+        </div>
+        
+        <div class="mt-8 bg-green-500/10 border border-green-500/30 p-4 rounded-lg flex items-center gap-3">
+             <i class="fa-solid fa-headset text-green-400 text-xl"></i>
+             <div>
+                <div class="font-bold text-sm">Need Help?</div>
+                <div class="text-xs text-gray-400">Contact us via the Store section for support.</div>
+             </div>
+        </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="tools" class="py-20 px-5 max-w-7xl mx-auto">
+  <h2 class="text-3xl md:text-4xl font-bold font-orbitron text-center mb-12"><span class="text-cyan-400">SMART</span> TOOLS</h2>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    
+    <a href="https://whiteshadow-web-host.yzz.me/?i=1" target="_blank" class="col-span-2 glass-card btn-hosting p-6 text-center transform hover:scale-[1.02] transition">
+      <div class="absolute top-2 right-2 bg-white text-black text-[10px] font-bold px-2 py-0.5 rounded">HOT</div>
+      <i class="fa-solid fa-globe text-4xl mb-3 text-white"></i>
+      <h3 class="text-2xl font-bold text-white">FREE WEB HOSTING</h3>
+      <p class="text-sm text-white/80 mt-1">Unlimited & Fast • Deploy Now</p>
+    </a>
+
+    <a href="https://js-obfuscator-tool.netlify.app/" target="_blank" class="glass-card p-5 text-center hover:bg-blue-900/20">
+      <i class="fa-solid fa-code text-blue-400 text-2xl mb-2"></i>
+      <h4 class="font-bold">Obfuscator</h4>
+    </a>
+    <a href="https://qr-decoder-tool.netlify.app/" target="_blank" class="glass-card p-5 text-center hover:bg-blue-900/20">
+      <i class="fa-solid fa-qrcode text-blue-400 text-2xl mb-2"></i>
       <h4 class="font-bold">QR Decoder</h4>
     </a>
-    <a href="https://watermark-tool-six.vercel.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
-      <i class="fa-solid fa-copyright text-blue-400 text-3xl mb-2"></i>
-      <h4 class="font-bold">Watermark Tool</h4>
+    <a href="https://wp-unban-tool.vercel.app/" target="_blank" class="glass-card p-5 text-center hover:bg-blue-900/20">
+      <i class="fa-brands fa-whatsapp text-blue-400 text-2xl mb-2"></i>
+      <h4 class="font-bold">Unban Tool</h4>
     </a>
-    <a href="https://wp-unban-tool.vercel.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
-      <i class="fa-brands fa-whatsapp text-blue-400 text-3xl mb-2"></i>
-      <h4 class="font-bold">WA Unban</h4>
-    </a>
-    <a href="https://whiteshadow-ai.netlify.app/" target="_blank" class="glass-card hover:bg-blue-900/20 text-center">
-      <i class="fa-solid fa-robot text-blue-400 text-3xl mb-2"></i>
+    <a href="https://whiteshadow-ai.netlify.app/" target="_blank" class="glass-card p-5 text-center hover:bg-blue-900/20">
+      <i class="fa-solid fa-robot text-blue-400 text-2xl mb-2"></i>
       <h4 class="font-bold">AI Chat</h4>
     </a>
   </div>
 </section>
 
-<section class="max-w-4xl mx-auto p-5 fade-in-up delay-3">
-  <div class="glass-card p-6">
-    <h2 class="text-2xl font-bold text-center text-orange-400 mb-6 font-orbitron">PREMIUM STORE</h2>
+<section id="store" class="py-20 px-5 max-w-4xl mx-auto">
+  <div class="glass-card p-8 border-orange-500/20 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 blur-[80px] -z-10"></div>
+
+    <h2 class="text-2xl font-bold text-center text-orange-400 mb-8 font-orbitron">PREMIUM STORE</h2>
     <div class="grid md:grid-cols-2 gap-4">
-      <a href="https://wa.me/94704896880?text=Buy%20Render%20Free%20Plan" class="block p-3 border border-orange-500/30 rounded-lg hover:bg-orange-500/10 transition flex justify-between items-center">
-        <span><i class="fa-solid fa-server text-orange-400 mr-2"></i>Render Account</span>
-        <span class="font-bold text-orange-400">200 LKR</span>
+      
+      <div class="p-4 border border-white/10 rounded-lg flex justify-between items-center bg-white/5 hover:bg-white/10 transition">
+        <span class="text-gray-300 flex items-center"><i class="fa-solid fa-database mr-3 text-orange-400"></i>Mini Bot (MongoDB)</span>
+        <a href="https://wa.me/94704896880?text=Buy%20MiniBot%20Base" class="px-3 py-1 bg-orange-500 text-black font-bold rounded text-sm hover:bg-orange-400">1000 LKR</a>
+      </div>
+
+      <div class="p-4 border border-white/10 rounded-lg flex justify-between items-center bg-white/5 hover:bg-white/10 transition">
+        <span class="text-gray-300 flex items-center"><i class="fa-solid fa-server mr-3 text-orange-400"></i>Render Account</span>
+        <a href="https://wa.me/94704896880?text=Buy%20Render" class="px-3 py-1 bg-orange-500 text-black font-bold rounded text-sm hover:bg-orange-400">200 LKR</a>
+      </div>
+
+      <div class="p-4 border border-white/10 rounded-lg flex justify-between items-center bg-white/5 hover:bg-white/10 transition">
+        <span class="text-gray-300 flex items-center"><i class="fa-solid fa-plug mr-3 text-orange-400"></i>Bot Plugin</span>
+        <a href="https://wa.me/94704896880?text=Buy%20Plugin" class="px-3 py-1 bg-orange-500 text-black font-bold rounded text-sm hover:bg-orange-400">60 LKR</a>
+      </div>
+
+      <a href="https://wa.me/message/SZQLM5RKQFRKI1?src=qr" target="_blank" class="p-4 border border-cyan-500/50 rounded-lg flex justify-center items-center bg-cyan-500/10 hover:bg-cyan-500 hover:text-black transition cursor-pointer group">
+        <span class="font-bold flex items-center"><i class="fa-solid fa-message mr-3 group-hover:animate-bounce"></i>CONTACT OWNER</span>
       </a>
-      <a href="https://wa.me/94704896880?text=Buy%20Plugin" class="block p-3 border border-orange-500/30 rounded-lg hover:bg-orange-500/10 transition flex justify-between items-center">
-        <span><i class="fa-solid fa-plug text-orange-400 mr-2"></i>Bot Plugin</span>
-        <span class="font-bold text-orange-400">60 LKR</span>
-      </a>
-      <a href="https://wa.me/94704896880?text=Buy%20MiniBot%20Base" class="block p-3 border border-orange-500/30 rounded-lg hover:bg-orange-500/10 transition flex justify-between items-center">
-        <span><i class="fa-solid fa-robot text-orange-400 mr-2"></i>MiniBot Base</span>
-        <span class="font-bold text-orange-400">250 LKR</span>
-      </a>
-      <a href="https://wa.me/94704896880?text=Buy%20Bot%20Deploy" class="block p-3 border border-orange-500/30 rounded-lg hover:bg-orange-500/10 transition flex justify-between items-center">
-        <span><i class="fa-solid fa-rocket text-orange-400 mr-2"></i>Heroku Deploy</span>
-        <span class="font-bold text-orange-400">200 LKR</span>
-      </a>
+
     </div>
   </div>
 </section>
 
-<section class="max-w-4xl mx-auto p-5 pb-20 fade-in-up delay-3 text-center">
-  <h2 class="text-purple-400 text-2xl font-bold mb-4 font-orbitron">About WHITESHADOW-MD</h2>
-  <p class="text-gray-300 leading-relaxed">
-    Experience the next generation of WhatsApp automation. Features include ViewOnce downloader, Anti-Delete, Social Media downloaders (TikTok, FB, IG, YT), and AI integration.
-  </p>
-  <div class="mt-6 flex justify-center gap-6">
-    <a href="https://whatsapp.com/channel/0029Vak4dFAHQbSBzyxlGG13" target="_blank" class="text-3xl text-green-500 hover:text-green-400 hover:scale-125 transition"><i class="fa-brands fa-whatsapp"></i></a>
-    <a href="https://www.tiktok.com/@white.shadow468?_t=ZS-903M0JpWH3w&_r=1" target="_blank" class="text-3xl text-pink-500 hover:text-pink-400 hover:scale-125 transition"><i class="fa-brands fa-tiktok"></i></a>
-    <a href="https://github.com/cnw-db/Whiteshadow-vx.git" target="_blank" class="text-3xl text-white hover:text-gray-300 hover:scale-125 transition"><i class="fa-brands fa-github"></i></a>
+<footer class="text-center py-10 border-t border-gray-800 text-gray-500 text-sm">
+  <p class="mb-4">Developed by <span class="text-cyan-400">Chamod Nimsara</span></p>
+  <div class="flex justify-center gap-6 text-xl mb-4">
+    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-github"></i></a>
+    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-tiktok"></i></a>
   </div>
-  <p class="mt-8 text-xs text-gray-500">Powered by WHITESHADOW © 2026</p>
-</section>
+  <p>COPYRIGHT © 2026 WHITESHADOW-MD</p>
+</footer>
 
-<div class="ws-player-container">
-  <div class="ws-player" id="wsPlayer">
-    <img src="https://i.ytimg.com/vi_webp/Ljuk6KPsSAc/maxresdefault.webp" alt="Album Art" class="album-art" id="albumArt">
-    
-    <div class="progress-area">
-      <div class="flex justify-between items-end mb-1">
-        <div>
-          <h4 class="text-sm font-bold text-white truncate w-32">Nidahasi</h4>
-          <p class="text-xs text-gray-400">Smokio</p>
-        </div>
-        <a href="https://cdn402.savetube.vip/media/Ljuk6KPsSAc/nidahasi-128-ytshorts.savetube.me.mp3" download class="text-xs text-cyan-400 hover:text-white"><i class="fa-solid fa-download"></i></a>
-      </div>
-      <div class="progress-bar-bg" id="progressBarBg">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-    </div>
-
-    <div class="controls flex items-center">
-      <button id="prevBtn"><i class="fa-solid fa-backward-step"></i></button>
-      <button id="playPauseBtn" class="btn-play"><i id="playIcon" class="fa-solid fa-play"></i></button>
-      <button id="nextBtn"><i class="fa-solid fa-forward-step"></i></button>
-    </div>
+<div class="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-black/60 backdrop-blur-md border border-white/10 rounded-full p-2 pr-6 flex items-center gap-3 z-40 shadow-2xl">
+  <img src="https://files.catbox.moe/xta6u1.jpg" class="w-10 h-10 rounded-full animate-[spin_8s_linear_infinite]" style="animation-play-state: paused;" id="disk">
+  <div class="flex-1 overflow-hidden">
+    <div class="text-xs font-bold text-white truncate">Nidahasi - Smokio</div>
   </div>
+  <button onclick="togglePlay()" class="text-cyan-400 text-xl hover:scale-110 transition"><i class="fa-solid fa-play" id="playIcon"></i></button>
 </div>
-
-<audio id="audio" src="https://cdn402.savetube.vip/media/Ljuk6KPsSAc/nidahasi-128-ytshorts.savetube.me.mp3" preload="metadata"></audio>
+<audio id="audio" src="https://files.catbox.moe/sv4e8r.mp3"></audio>
 
 <script>
-  const audio = document.getElementById('audio');
-  const playBtn = document.getElementById('playPauseBtn');
-  const playIcon = document.getElementById('playIcon');
-  const progressFill = document.getElementById('progressFill');
-  const wsPlayer = document.getElementById('wsPlayer');
+  // 1. Preloader Logic
+  window.addEventListener('load', () => {
+    let percent = 0;
+    const text = document.getElementById('load-percent');
+    const preloader = document.getElementById('preloader');
+    
+    const interval = setInterval(() => {
+      percent += Math.floor(Math.random() * 10) + 5;
+      if (percent >= 100) {
+        percent = 100;
+        clearInterval(interval);
+        text.innerText = "100%";
+        
+        setTimeout(() => {
+          preloader.style.opacity = '0';
+          preloader.style.visibility = 'hidden';
+          // Trigger Ad Modal after load
+          setTimeout(openModal, 2500); 
+        }, 500);
+      } else {
+        text.innerText = percent + "%";
+      }
+    }, 100);
+  });
+
+  // 2. Mobile Menu Toggle
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  let isMenuOpen = false;
+
+  menuBtn.addEventListener('click', () => toggleMenu());
+
+  function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+    if (isMenuOpen) {
+      mobileMenu.classList.add('open');
+      menuBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    } else {
+      mobileMenu.classList.remove('open');
+      menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    }
+  }
+
+  // 3. Typewriter Effect
+  const words = ["WhatsApp Automation.", "Smart Tools.", "Premium Hosting."];
+  let i = 0, j = 0;
+  let currentWord = "";
+  let isDeleting = false;
   
-  // Play/Pause Toggle
-  playBtn.addEventListener('click', () => {
+  function type() {
+    currentWord = words[i];
+    if (isDeleting) {
+      document.getElementById("typewriter").textContent = currentWord.substring(0, j-1);
+      j--;
+      if (j == 0) { isDeleting = false; i++; if (i == words.length) i = 0; }
+    } else {
+      document.getElementById("typewriter").textContent = currentWord.substring(0, j+1);
+      j++;
+      if (j == currentWord.length) { isDeleting = true; }
+    }
+    setTimeout(type, isDeleting ? 100 : 200);
+  }
+  type();
+
+  // 4. Music Player
+  const audio = document.getElementById('audio');
+  const playIcon = document.getElementById('playIcon');
+  const disk = document.getElementById('disk');
+  
+  function togglePlay() {
     if (audio.paused) {
       audio.play();
-      wsPlayer.classList.add('playing');
-      playIcon.className = 'fa-solid fa-pause';
+      playIcon.classList.remove('fa-play');
+      playIcon.classList.add('fa-pause');
+      disk.style.animationPlayState = 'running';
     } else {
       audio.pause();
-      wsPlayer.classList.remove('playing');
-      playIcon.className = 'fa-solid fa-play';
+      playIcon.classList.remove('fa-pause');
+      playIcon.classList.add('fa-play');
+      disk.style.animationPlayState = 'paused';
     }
-  });
+  }
 
-  // Update Progress Bar
-  audio.addEventListener('timeupdate', () => {
-    if (audio.duration) {
-      const percent = (audio.currentTime / audio.duration) * 100;
-      progressFill.style.width = percent + '%';
-    }
-  });
-
-  // Reset when ended
-  audio.addEventListener('ended', () => {
-    wsPlayer.classList.remove('playing');
-    playIcon.className = 'fa-solid fa-play';
-    progressFill.style.width = '0%';
-  });
-
-  // Simple prev/next (Restart track for now as there's 1 song)
-  document.getElementById('prevBtn').addEventListener('click', () => audio.currentTime = 0);
-  document.getElementById('nextBtn').addEventListener('click', () => audio.currentTime = audio.duration || 0);
+  // 5. Ad Modal Logic
+  const modal = document.getElementById('channel-modal');
+  const modalBox = document.getElementById('modal-box');
   
-  // Click on progress bar to seek
-  document.getElementById('progressBarBg').addEventListener('click', (e) => {
-    const width = e.target.clientWidth; // Width of the bar
-    const clickX = e.offsetX; // Click position
-    const duration = audio.duration;
-    
-    audio.currentTime = (clickX / width) * duration;
-  });
+  function openModal() {
+    modal.classList.add('active');
+    modalBox.classList.remove('scale-90');
+    modalBox.classList.add('scale-100');
+  }
 
+  function closeModal() {
+    modal.classList.remove('active');
+    modalBox.classList.add('scale-90');
+    modalBox.classList.remove('scale-100');
+  }
 </script>
 
 </body>
