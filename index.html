@@ -31,36 +31,65 @@
   ::-webkit-scrollbar-track { background: #000; }
   ::-webkit-scrollbar-thumb { background: linear-gradient(var(--primary), var(--secondary)); border-radius: 4px; }
 
-  /* --- 1. SUPERB LOADING ANIMATION --- */
+  /* --- 1. MINIMALIST PLEXUS LOADING ANIMATION --- */
   #preloader {
     position: fixed; inset: 0;
-    background: #000; z-index: 9999;
+    background: var(--bg-dark); z-index: 9999;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     transition: opacity 0.8s ease, visibility 0.8s;
+    gap: 30px;
   }
-  .loader-ring {
-    width: 120px; height: 120px;
-    border: 4px solid transparent;
-    border-top: 4px solid var(--primary);
-    border-right: 4px solid var(--secondary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  .plexus-container {
+    width: 150px; height: 150px;
     position: relative;
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+    animation: plexus-spin 15s linear infinite;
   }
-  .loader-ring::before {
-    content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
-    border: 4px solid transparent; border-top: 4px solid var(--secondary);
-    border-radius: 50%; animation: spin-reverse 1.5s linear infinite;
+  @keyframes plexus-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+  /* Core Node */
+  .core-node {
+    width: 40px; height: 40px;
+    background: rgba(0, 242, 255, 0.1);
+    border: 3px solid var(--primary);
+    border-radius: 50%;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
+    animation: core-pulse 3s infinite alternate;
   }
-  .loader-text {
-    margin-top: 20px; font-family: 'Orbitron'; letter-spacing: 3px;
-    color: var(--primary); font-size: 14px; animation: pulse 1s infinite alternate;
+  @keyframes core-pulse { 0% { box-shadow: 0 0 20px rgba(0, 242, 255, 0.3); } 100% { box-shadow: 0 0 40px rgba(0, 242, 255, 0.6); border-color: rgba(0, 242, 255, 1); } }
+
+  /* Data Channels */
+  .data-channel {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(188, 19, 254, 0.2), var(--secondary), transparent);
+    position: absolute; top: 50%; left: 50%;
+    transform-origin: left;
+    opacity: 0;
+    animation: channel-flow 3s infinite linear;
   }
-  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  @keyframes spin-reverse { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
-  @keyframes pulse { 0% { opacity: 0.5; } 100% { opacity: 1; text-shadow: 0 0 10px var(--primary); } }
+  @keyframes channel-flow { 
+    0% { width: 0%; opacity: 0; } 10% { opacity: 0.1; } 40% { opacity: 0.6; }
+    80% { opacity: 0.1; } 100% { width: 100%; opacity: 0; }
+  }
+  .channel-1 { transform: rotate(0deg) scaleX(1.1) translateX(20px); animation-delay: 0s; }
+  .channel-2 { transform: rotate(90deg) scaleX(1.1) translateX(20px); animation-delay: 0.75s; }
+  .channel-3 { transform: rotate(180deg) scaleX(1.1) translateX(20px); animation-delay: 1.5s; }
+  .channel-4 { transform: rotate(270deg) scaleX(1.1) translateX(20px); animation-delay: 2.25s; }
+
+  /* Orbiting elements */
+  .orbit-group { position: absolute; inset: -20px; animation: orbit-spin 6s linear infinite; }
+  @keyframes orbit-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  .orbiter { width: 6px; height: 6px; background: #fff; border-radius: 50%; position: absolute; left: 50%; top: 0; transform: translateX(-50%); box-shadow: 0 0 8px #fff; }
+  .orbiter::before { content: ''; position: absolute; inset: 0; background: var(--primary); filter: blur(3px); }
+  .orbiter-2 { top: auto; bottom: 0; background: var(--secondary); box-shadow: 0 0 8px var(--secondary); }
+  .orbiter-2::before { background: var(--secondary); }
+
+  /* Loading Status text */
+  .loading-status { font-family: 'Rajdhani'; color: #ccc; text-align: center; font-size: 14px; letter-spacing: 1px; }
+  .loading-label { opacity: 0.7; }
+  #load-percent { color: var(--primary); font-family: 'Orbitron'; margin-left: 10px; font-weight: bold; text-shadow: 0 0 5px var(--primary); }
 
   /* --- 2. NAVIGATION BAR --- */
   nav {
@@ -164,9 +193,21 @@
 <body class="loading">
 
 <div id="preloader">
-  <div class="loader-ring"></div>
-  <div class="loader-text">INITIALIZING SYSTEM...</div>
-  <div class="mt-2 text-gray-500 text-xs font-mono" id="load-percent">0%</div>
+  <div class="plexus-container">
+    <div class="core-node"></div>
+    <div class="data-channel channel-1"></div>
+    <div class="data-channel channel-2"></div>
+    <div class="data-channel channel-3"></div>
+    <div class="data-channel channel-4"></div>
+    <div class="orbit-group">
+      <div class="orbiter orbiter-1"></div>
+      <div class="orbiter orbiter-2"></div>
+    </div>
+  </div>
+  <div class="loading-status">
+    <span class="loading-label">WHITESHADOW-MD | ESTABLISHING CONNECTION</span>
+    <span id="load-percent">0%</span>
+  </div>
 </div>
 
 <div id="channel-modal" class="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-5">
@@ -495,14 +536,14 @@
 <audio id="audio" src="https://files.catbox.moe/sv4e8r.mp3"></audio>
 
 <script>
-  // 1. Preloader Logic
+  // 1. MINIMALIST PLEXUS PRELOADER LOGIC
   window.addEventListener('load', () => {
     let percent = 0;
     const text = document.getElementById('load-percent');
     const preloader = document.getElementById('preloader');
     
     const interval = setInterval(() => {
-      percent += Math.floor(Math.random() * 10) + 5;
+      percent += Math.floor(Math.random() * 8) + 3; // Random smooth increase
       if (percent >= 100) {
         percent = 100;
         clearInterval(interval);
@@ -511,9 +552,8 @@
         setTimeout(() => {
           preloader.style.opacity = '0';
           preloader.style.visibility = 'hidden';
-          // Trigger Ad Modal after load
-          setTimeout(openModal, 2500); 
-        }, 500);
+          setTimeout(openModal, 2500); // Open ad modal shortly after site loads
+        }, 800);
       } else {
         text.innerText = percent + "%";
       }
